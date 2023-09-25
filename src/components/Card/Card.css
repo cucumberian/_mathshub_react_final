@@ -9,15 +9,10 @@
 }
 
 .card {
-    /* min-width: 7rem; */
-    /* max-width: 9rem; */
-    /* min-height: 7rem; */
-    /* max-height: 9rem; */
     height: 9rem;
     width: 9rem;
     border-radius: 1rem;
     color: white;
-    background: darkgray;
     box-shadow: 0 0 3px 1px hsla(0, 0%, 0%, 0.3);
     overflow: hidden;
     cursor: pointer;
@@ -26,6 +21,10 @@
     justify-content: space-between;
     align-items: center;
     position: relative;
+    transition-delay: 0.5s;
+    transition: 1s;
+    /* transition: rotateX(0deg) 0.8s ease-out rotateZ(0deg) 0.8s ease-out; */
+
 }
 
 .card h4 {
@@ -38,14 +37,65 @@
     color: white;
     text-shadow: 0px 0px 2px hsl(0, 0%, 22%);
     backdrop-filter: opacity(0.9) brightness(80%) blur(2px);
-    ;
+    z-index: 3;
 }
 
 .card .card_image {
     object-fit: cover;
-
+    z-index: 2;
     height: 100%;
-    /* height: auto; */
     width: auto;
-    /* width: 100%; */
+}
+
+
+.card .card_sound {
+    overflow: visible;
+    height: 20px;
+    width: 20px;
+    z-index: 10;
+    color: red;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+
+.card .card_flip {
+
+    overflow: visible;
+    height: 2rem;
+    width: 2rem;
+    z-index: 10;
+    color: red;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+
+.card .action {
+    transition-duration: 0.2s;
+}
+
+.card .action:hover {
+    transform: scale(1.2);
+}
+
+.card_front,
+.card_back {
+    position: absolute;
+    top: 0;
+    left: 0;
+    backface-visibility: hidden;
+    transition: 1s;
+}
+
+.card_back {
+    transform: rotateY(180deg);
+}
+
+.card_front.card_rotated {
+    transform: rotateY(180deg);
+}
+
+.card_back.card_rotated {
+    transform: rotateY(360deg);
 }

@@ -9,6 +9,7 @@ import "./CategoryPage.css";
 
 function CategoryPage() {
   const categoryId = useParams().categoryId;
+  const [gameState, setGameState] = useState({});
 
   const categoryValue = useSelector(
     (store) => store.slova.categories[categoryId]
@@ -21,7 +22,14 @@ function CategoryPage() {
 
       <div className="cards_grid">
         {cards.map((card, index) => (
-          <Card key={index} word={card.word} imageUrl={card.image} id={index} />
+          <Card
+            key={index}
+            word={card.word}
+            translation={card.translation}
+            soundUrl={card.audioSrc}
+            imageUrl={card.image}
+            id={index}
+          />
         ))}
       </div>
     </>
