@@ -1,12 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
 
 import slovaSlice from "./slova-slive";
-import appStateSlice from "./appState-slice";
+import gameStateSlice from "./gameState-slice";
 
 const store = configureStore({
   reducer: {
     slova: slovaSlice.reducer,
-    appState: appStateSlice.reducer,
+    gameState: gameStateSlice.reducer,
   },
 });
 

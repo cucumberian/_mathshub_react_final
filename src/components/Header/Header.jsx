@@ -6,21 +6,28 @@ import Navbar from "../Navbar/Navbar";
 import "./Header.css";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { appStateActions } from "../../store/appState-slice";
+import { gameStateActions } from "../../store/gameState-slice";
+import { STATE_TRAIN } from "../../store/gameState-slice";
 
 function Header() {
   const dispatch = useDispatch();
-  const status = useSelector((state) => state.appState.isTest);
-  const checkboxWord = useMemo(() => (status ? "Test" : "Play"), [status]);
+  const gameState = useSelector((state) => state.gameState.gameState);
+
+  const checkboxWord = useMemo(
+    () => (gameState === STATE_TRAIN ? "Train" : "Play"),
+    [gameState]
+  );
 
   const headerCheckboxChangeHandler = () => {
-    dispatch(appStateActions.changeState());
+    dispatch(gameStateActions.toggleTrain());
   };
 
   return (
     <>
       <p>header</p>
+
       <Navbar />
+
       <label>
         <input type="checkbox" onChange={headerCheckboxChangeHandler} />
         {checkboxWord}

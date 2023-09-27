@@ -1,19 +1,19 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const TESTSTATUS = "test";
-const GAMESTATUS = "game";
+const STATE_TRAIN = "train";
+const STATE_GAME = "game";
 
 const initialAppStatusState = {
-  gameState: TESTSTATUS,
-  isTest: true,
+  gameState: STATE_TRAIN,
 };
 
 const sliceAppStateConfig = {
   name: "appState",
   initialState: initialAppStatusState,
   reducers: {
-    changeState(state) {
-      state.isTest = !state.isTest;
+    toggleTrain(state) {
+      if (state.state !== STATE_TRAIN) {
+      }
     },
   },
 };

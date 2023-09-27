@@ -1,54 +1,54 @@
 import React from "react";
 import { useEffect } from "react";
-import { useMemo } from "react";
 
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+
+import { gameStateActions } from "../store/gameState-slice";
+import { STATE_TRAIN } from "../store/gameState-slice";
+import { STATE_GAME } from "../store/gameState-slice";
+import { STATE_USER_INPUT } from "../store/gameState-slice";
+import { STATE_GAME_OVER } from "../store/gameState-slice";
 
 import Card from "../components/Card/Card";
-
-import useFSM from "../hooks/useFSM";
-import { STATE_INIT } from "../hooks/useFSM";
-import { STATE_START_GAME } from "../hooks/useFSM";
-
-import { shuffle } from "../utils/utils";
 
 import "./CategoryPage.css";
 
 function CategoryPage() {
+  const dispatch = useDispatch();
+  const gameState = useSelector((state) => state.gameState.gameState);
   const categoryId = useParams().categoryId;
-
-  const isTest = useSelector((store) => store.appState.isTest);
 
   const categoryValue = useSelector(
     (store) => store.slova.categories[categoryId]
   );
   const cards = categoryValue.cards;
-  const { gameState, gameDispatch, gameOff } = useFSM({ cards });
 
-  useEffect(() => {
-    if (isTest) {
-      gameOff();
-    } else {
-      gameDispatch("gameInit");
-    }
-  }, [isTest]);
+  const startButtonHandler = () => {
+    const payload = { cards: cards };
+    dispatch(gameStateActions.startGame(payload));
+  };
 
-  const gameStartButtonHandler = () => {
-    gameDispatch(STATE_START_GAME);
+  const repeatButtonHandler = () => {
+    dispatch(gameStateActions.repeatWord());
   };
 
   return (
     <>
       <h1>Категория {categoryValue.title}</h1>
-      {gameState !== STATE_INIT && (
+
+      {gameState !== STATE_TRAIN && (
         <div>
-          <button type="button" onClick={gameStartButtonHandler}>
-            Start
+          <button type="button" onClick={startButtonHandler}>
+            start
           </button>
-          <button type="button">Repeat</button>
+          <button type="button" onClick={repeatButtonHandler}>
+            repeat
+          </button>
         </div>
       )}
+
       <div className="cards_grid">
         {cards.map((card, index) => (
           <Card
