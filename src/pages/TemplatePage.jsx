@@ -3,21 +3,20 @@ import React from "react";
 import { Outlet } from "react-router-dom";
 import Header from "../components/Header/Header";
 import Footer from "../components/Footer/Footer";
-import Navbar from "../components/Navbar/Navbar";
+
+import { createPortal } from "react-dom";
 
 function TemplatePage() {
+  const header = document.getElementById("header");
+  const footer = document.getElementById("footer");
+
   return (
     <>
-      <Header>
-        <p>heading</p>
-        <Navbar />
-      </Header>
+      <>{createPortal(<Header />, header)}</>
 
       <Outlet />
 
-      <Footer>
-        <p>footing</p>
-      </Footer>
+      <>{createPortal(<Footer />, footer)}</>
     </>
   );
 }

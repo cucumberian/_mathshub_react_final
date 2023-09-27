@@ -1,13 +1,32 @@
 import React from "react";
-
-import { createPortal } from "react-dom";
+import { useCallback } from "react";
+import { useMemo } from "react";
+import Navbar from "../Navbar/Navbar";
 
 import "./Header.css";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { appStateActions } from "../../store/appState-slice";
 
-function Header({ children }) {
-  const header = document.getElementById("header");
+function Header() {
+  const dispatch = useDispatch();
+  const status = useSelector((state) => state.appState.isTest);
+  const checkboxWord = useMemo(() => (status ? "Test" : "Play"), [status]);
 
-  return <>{createPortal(<div>{children}</div>, header)}</>;
+  const headerCheckboxChangeHandler = () => {
+    dispatch(appStateActions.changeState());
+  };
+
+  return (
+    <>
+      <p>header</p>
+      <Navbar />
+      <label>
+        <input type="checkbox" onChange={headerCheckboxChangeHandler} />
+        {checkboxWord}
+      </label>
+    </>
+  );
 }
 
 export default Header;

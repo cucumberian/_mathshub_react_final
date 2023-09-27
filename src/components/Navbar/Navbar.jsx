@@ -10,6 +10,9 @@ function Navbar() {
   return (
     <nav>
       <ul>
+        <li>
+          <NavLink to="/">Категории</NavLink>
+        </li>
         {categories.map((category, index) => {
           return (
             <li key={`${xxx}_${index}`}>
