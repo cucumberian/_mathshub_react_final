@@ -11,8 +11,7 @@ const initialGameState = {
   gameState: STATE_TRAIN,
   cards: [],
   clickedCardWord: null,
-  userBadAnswers: 0,
-  userCorrectAnswers: 0,
+  userAnswers: [],
 };
 
 const gameStateSliceConfig = {
@@ -23,9 +22,8 @@ const gameStateSliceConfig = {
       if (state.gameState !== STATE_TRAIN) {
         state.gameState = STATE_TRAIN;
       } else {
+        state.userAnswers = [];
         state.gameState = STATE_GAME;
-        state.userBadAnswers = 0;
-        state.userCorrectAnswers = 0;
       }
     },
 
@@ -70,8 +68,8 @@ const gameStateSliceConfig = {
     goodClick(state, action) {
       const payload = action.payload;
       console.log("good click");
-      state.userCorrectAnswers = state.userCorrectAnswers + 1;
-
+      // state.userCorrectAnswers = state.userCorrectAnswers + 1;
+      state.userAnswers.push(payload);
       const cards = state.cards.map((proxyCard) =>
         Object.fromEntries(Object.entries(proxyCard))
       );
@@ -90,8 +88,14 @@ const gameStateSliceConfig = {
     badClick(state, action) {
       const payload = action.payload;
       console.log("badClick");
-      state.userBadAnswers = state.userBadAnswers + 1;
+      // state.userBadAnswers = state.userBadAnswers + 1;
+      state.userAnswers.push(payload);
       state.gameState = STATE_USER_INPUT;
+    },
+
+    finishGame(state) {
+      state.gameState = STATE_GAME;
+      state.userAnswers = [];
     },
 
     changeState(state, action) {

@@ -7,6 +7,8 @@ import { RouterProvider } from "react-router-dom";
 import { createBrowserRouter } from "react-router-dom";
 import TemplatePage from "./pages/TemplatePage";
 
+import { v4 as uuidv4 } from "uuid";
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -19,6 +21,13 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
+  const userId = localStorage.getItem("userId");
+
+  if (userId === null) {
+    const uuid = uuidv4();
+    localStorage.setItem("userId", uuid);
+  }
+
   return <RouterProvider router={router} />;
 }
 

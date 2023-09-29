@@ -14,8 +14,11 @@ import { STATE_CHECK } from "../store/gameState-slice";
 import { STATE_GAME_OVER } from "../store/gameState-slice";
 
 import Card from "../components/Card/Card";
+import Scores from "../components/Scores/Scores";
 
 import "./CategoryPage.css";
+import Modal from "../UI/Modal";
+import GameOver from "../components/GameOver/GameOver";
 
 function CategoryPage() {
   const categoryId = useParams().categoryId;
@@ -43,6 +46,7 @@ function CategoryPage() {
     if (gameState !== STATE_USER_INPUT) return;
     console.log("Игра, клик по карте");
     const payload = { word };
+
     dispatch(gameStateActions.toCheck(payload));
   };
 
@@ -69,12 +73,20 @@ function CategoryPage() {
       // прибавить балл пользователю
       // убать карточку
       // перейти в стостояние SAY
-      const payload = { word: trueWord, isCorrect: true };
+      const payload = {
+        word: trueWord,
+        isCorrect: true,
+        date: new Date().getTime(),
+      };
       dispatch(gameStateActions.goodClick(payload));
     } else {
       // добавляем штрафной
       // переходим в user_input
-      const payload = { word: trueWord, isCorrect: false };
+      const payload = {
+        word: trueWord,
+        isCorrect: false,
+        date: new Date().getTime(),
+      };
       dispatch(gameStateActions.badClick(payload));
     }
   }
@@ -91,8 +103,22 @@ function CategoryPage() {
     initGameOver();
   }, [gameState]);
 
+  useEffect(() => {
+    if (gameState !== STATE_TRAIN) {
+      console.log("finishGame");
+      dispatch(gameStateActions.finishGame());
+    }
+  }, [categoryId]);
+
   return (
     <>
+      {gameState === STATE_GAME_OVER && (
+        <Modal>
+          <GameOver />
+          <p>asdasdasdasd</p>
+        </Modal>
+      )}
+
       <h1>Категория {categoryValue.title}</h1>
 
       {gameState !== STATE_TRAIN && (
@@ -105,6 +131,8 @@ function CategoryPage() {
           </button>
         </div>
       )}
+
+      <Scores />
 
       <div className="cards_grid">
         {cards.map((card, index) => (
