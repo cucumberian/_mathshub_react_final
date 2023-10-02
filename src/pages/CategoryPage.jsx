@@ -27,7 +27,7 @@ function CategoryPage() {
   const categoryValue = useSelector(
     (store) => store.slova.categories[categoryId]
   );
-  const word = useSelector((store) => store.gameState.clickedCardWord);
+  const clickedCard = useSelector((store) => store.gameState.clickedCard);
   const cards = categoryValue.cards;
   const gameCards = useSelector((store) => store.gameState.cards);
 
@@ -41,11 +41,17 @@ function CategoryPage() {
     dispatch(gameStateActions.toSay());
   };
 
-  const gameCardClickHandler = (word) => {
+  const gameCardClickHandler = (cardObject) => {
     // работает только в состоянии USER_INPUT
     if (gameState !== STATE_USER_INPUT) return;
     console.log("Игра, клик по карте");
-    const payload = { word };
+
+    const payload = {
+      word: cardObject.word,
+      translation: cardObject.translation,
+      categoryId: categoryId,
+      isTrain: false,
+    };
 
     dispatch(gameStateActions.toCheck(payload));
   };
@@ -59,7 +65,7 @@ function CategoryPage() {
     dispatch(gameStateActions.changeState(STATE_USER_INPUT));
   }
 
-  function initCheck() {
+  async function initCheck() {
     if (gameState !== STATE_CHECK) return;
 
     console.log("Привет CHECK");
@@ -67,28 +73,43 @@ function CategoryPage() {
     const trueCard = gameCards[0];
     const trueWord = trueCard.word;
 
+    const word = clickedCard.word;
+
     console.log(trueWord, "?", word);
+
+    const payload = {
+      word: trueWord,
+      translation: trueCard.translation,
+      categoryTitle: categoryValue.title,
+      isTrain: false,
+      isCorrect: true,
+      date: new Date().getTime(),
+    };
 
     if (trueWord === word) {
       // прибавить балл пользователю
       // убать карточку
       // перейти в стостояние SAY
-      const payload = {
-        word: trueWord,
-        isCorrect: true,
-        date: new Date().getTime(),
-      };
+      payload.isCorrect = true;
       dispatch(gameStateActions.goodClick(payload));
     } else {
       // добавляем штрафной
       // переходим в user_input
-      const payload = {
-        word: trueWord,
-        isCorrect: false,
-        date: new Date().getTime(),
-      };
+      payload["isCorrect"] = false;
       dispatch(gameStateActions.badClick(payload));
     }
+
+    // отправляем данные на сервер
+    const userId = localStorage.getItem("userId");
+    const serverUrl = `https://easy-english-4604a-default-rtdb.europe-west1.firebasedatabase.app/${userId}.json`;
+
+    const response = await fetch(serverUrl, {
+      method: "POST",
+      body: JSON.stringify(payload),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
   }
 
   function initGameOver() {
@@ -137,12 +158,8 @@ function CategoryPage() {
       <div className="cards_grid">
         {cards.map((card, index) => (
           <Card
+            cardObject={card}
             key={index}
-            word={card.word}
-            translation={card.translation}
-            soundUrl={card.audioSrc}
-            imageUrl={card.image}
-            id={index}
             gameCardClickHandler={gameCardClickHandler}
           />
         ))}

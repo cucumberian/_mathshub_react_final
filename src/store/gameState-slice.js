@@ -9,9 +9,9 @@ export const STATE_GAME_OVER = "game_over";
 
 const initialGameState = {
   gameState: STATE_TRAIN,
-  cards: [],
-  clickedCardWord: null,
-  userAnswers: [],
+  cards: [], // динамический массив карточек для игры
+  clickedCard: null, // слово в карточке на которую нажал пользователь
+  userAnswers: [], // список ответов пользователя
 };
 
 const gameStateSliceConfig = {
@@ -60,15 +60,14 @@ const gameStateSliceConfig = {
 
     toCheck(state, action) {
       const payload = action.payload;
-      const word = payload.word;
-      state.clickedCardWord = word;
+
+      state.clickedCard = payload;
       state.gameState = STATE_CHECK;
     },
 
     goodClick(state, action) {
       const payload = action.payload;
       console.log("good click");
-      // state.userCorrectAnswers = state.userCorrectAnswers + 1;
       state.userAnswers.push(payload);
       const cards = state.cards.map((proxyCard) =>
         Object.fromEntries(Object.entries(proxyCard))

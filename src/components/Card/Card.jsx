@@ -7,18 +7,11 @@ import { AiFillSound } from "react-icons/ai";
 
 import "./Card.css";
 
-function Card({
-  imageUrl,
-  word,
-  translation,
-  soundUrl,
-  id,
-  gameCardClickHandler,
-}) {
+function Card({ cardObject, gameCardClickHandler }) {
   const [isFlip, setIsFlip] = useState(false);
 
   const playSoundHandler = () => {
-    const soundObject = new Audio(`/src/assets/${soundUrl}`);
+    const soundObject = new Audio(`/src/assets/${cardObject.audioSrc}`);
     soundObject.play();
   };
 
@@ -31,7 +24,7 @@ function Card({
     <div
       className="card"
       onClick={() => {
-        gameCardClickHandler(word);
+        gameCardClickHandler(cardObject);
       }}
     >
       <div className={`card_front ${isFlip && "card_rotated"}`}>
@@ -48,11 +41,11 @@ function Card({
         />
 
         <img
-          // src={`/src/assets/${imageUrl}`}
-          alt={word}
+          // src={`/src/assets/${cardObject.image}`}
+          alt={cardObject.word}
           className="card_image "
         />
-        <h4>{word}</h4>
+        <h4>{cardObject.word}</h4>
       </div>
 
       <div className={`card_back ${isFlip && "card_rotated"}`}>
@@ -70,10 +63,10 @@ function Card({
 
         <img
           // src={`/src/assets/${imageUrl}`}
-          alt={word}
+          alt={cardObject.word}
           className="card_image "
         />
-        <h4>{translation}</h4>
+        <h4>{cardObject.translation}</h4>
       </div>
     </div>
   );
