@@ -8,6 +8,7 @@ import { createBrowserRouter } from "react-router-dom";
 import TemplatePage from "./pages/TemplatePage";
 
 import { v4 as uuidv4 } from "uuid";
+import Statistics from "./pages/Statistics";
 
 const router = createBrowserRouter([
   {
@@ -16,6 +17,7 @@ const router = createBrowserRouter([
     children: [
       { index: true, element: <HomePage /> },
       { path: "category/:categoryId", element: <CategoryPage /> },
+      { path: "statistics", element: <Statistics /> },
     ],
   },
 ]);

@@ -27,6 +27,7 @@ function CategoryPage() {
   const categoryValue = useSelector(
     (store) => store.slova.categories[categoryId]
   );
+  const firebaseUrl = useSelector((store) => store.dbSettings.firebaseUrl);
   const clickedCard = useSelector((store) => store.gameState.clickedCard);
   const cards = categoryValue.cards;
   const gameCards = useSelector((store) => store.gameState.cards);
@@ -101,7 +102,7 @@ function CategoryPage() {
 
     // отправляем данные на сервер
     const userId = localStorage.getItem("userId");
-    const serverUrl = `https://easy-english-4604a-default-rtdb.europe-west1.firebasedatabase.app/${userId}.json`;
+    const serverUrl = `${firebaseUrl}/userAnswers/${userId}.json`;
 
     const response = await fetch(serverUrl, {
       method: "POST",
