@@ -19,6 +19,7 @@ import Scores from "../components/Scores/Scores";
 import "./CategoryPage.css";
 import Modal from "../UI/Modal";
 import GameOver from "../components/GameOver/GameOver";
+import { sha256 } from "js-sha256";
 
 function CategoryPage() {
   const categoryId = useParams().categoryId;
@@ -66,6 +67,40 @@ function CategoryPage() {
     dispatch(gameStateActions.changeState(STATE_USER_INPUT));
   }
 
+  const createCardHash = ({ categoryTitle, word, translation }) => {
+    const hashedString = `${categoryTitle}_${word}_${translation}`;
+    const cardHash = sha256(hashedString);
+    return cardHash;
+  };
+
+  const flipCardFetcher = async (cardObject) => {
+    console.log("flipCardFetcher!!!!");
+    const payload = {
+      word: cardObject.word,
+      translation: cardObject.translation,
+      categoryTitle: categoryValue.title,
+      isTrain: true,
+      isCorrect: null,
+      date: new Date().getTime(),
+      cardHash: createCardHash({
+        categoryTitle: categoryValue.title,
+        word: cardObject.word,
+        translation: cardObject.translation,
+      }),
+    };
+
+    const userId = localStorage.getItem("userId");
+    const serverUrl = `${firebaseUrl}/userAnswers/${userId}.json`;
+
+    const response = await fetch(serverUrl, {
+      method: "POST",
+      body: JSON.stringify(payload),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+  };
+
   async function initCheck() {
     if (gameState !== STATE_CHECK) return;
 
@@ -85,6 +120,11 @@ function CategoryPage() {
       isTrain: false,
       isCorrect: true,
       date: new Date().getTime(),
+      cardHash: createCardHash({
+        categoryTitle: categoryValue.title,
+        word: trueWord,
+        translation: trueCard.translation,
+      }),
     };
 
     if (trueWord === word) {
@@ -162,6 +202,7 @@ function CategoryPage() {
             cardObject={card}
             key={index}
             gameCardClickHandler={gameCardClickHandler}
+            flipCardFetcher={flipCardFetcher}
           />
         ))}
       </div>

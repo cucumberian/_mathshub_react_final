@@ -7,7 +7,7 @@ import { AiFillSound } from "react-icons/ai";
 
 import "./Card.css";
 
-function Card({ cardObject, gameCardClickHandler }) {
+function Card({ cardObject, gameCardClickHandler, flipCardFetcher }) {
   const [isFlip, setIsFlip] = useState(false);
 
   const playSoundHandler = () => {
@@ -18,6 +18,8 @@ function Card({ cardObject, gameCardClickHandler }) {
   const flipCardHandler = () => {
     console.log("Переворачиваю карту");
     setIsFlip((prev) => !prev);
+
+    flipCardFetcher(cardObject);
   };
 
   return (

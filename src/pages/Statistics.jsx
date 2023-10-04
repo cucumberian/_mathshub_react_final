@@ -6,8 +6,7 @@ import "./Statistics.css";
 import CategoryTable from "../components/Table/CategoryTable";
 
 function Statistics() {
-  const [categories, setCategories] = useState([]);
-  const [catWords, setCatWords] = useState({});
+  const [uniqWords, setUniqWords] = useState({});
 
   const firebaseUrl = useSelector((store) => store.dbSettings.firebaseUrl);
 
@@ -23,51 +22,48 @@ function Statistics() {
 
       console.log("stats:", json);
 
-      const catList = Object.values(json).map((item) => item.categoryTitle);
+      const uniqCards = Object.values(json).reduce((acc, item) => {
+        if (!acc[item.categoryTitle]) {
+          acc[item.categoryTitle] = {};
+        } else {
+          if (acc[item.categoryTitle][item.cardHash]) {
+            // обновляем значения для статсичтики карточки
+            acc[item.categoryTitle][item.cardHash] = {
+              ...item,
+              trainCounter:
+                (item.isTrain ? 1 : 0) +
+                acc[item.categoryTitle][item.cardHash].trainCounter,
+              correctCounter:
+                (!item.isTrain && item.isCorrect ? 1 : 0) +
+                acc[item.categoryTitle][item.cardHash].isCorrect,
+              incorrectCounter:
+                (!item.isTrain && item.isCorrect ? 0 : 1) +
+                acc[item.categoryTitle][item.cardHash].isCorrect,
+            };
+          } else {
+            // инициализация статистики для карточки
+            acc[item.categoryTitle][item.cardHash] = {
+              ...item,
+              trainCounter: item.isTrain ? 1 : 0,
+              correctCounter: item.isCorrect ? 1 : 0,
+              incorrectCounter: item.isCorrect ? 0 : 1,
+            };
+          }
 
-      const catSet = Array.from(new Set(catList));
-      setCategories(catSet);
+          // acc[item.categoryTitle][item.cardHash] = item;
+        }
 
-      console.log("catList: ", catList);
-      console.log("catSet: ", catSet);
+        return acc;
+      }, {});
 
-      for (let category of catSet) {
-        console.log(category);
-        const categoryWords = new Set(
-          Object.values(json)
-            .filter((item) => item.categoryTitle === category)
-            .map((item) => item.word)
-        );
+      console.log("uniqCards.length =", Object.keys(uniqCards).length);
+      console.log("uniqCards =", uniqCards);
 
-        setCatWords((prev) => {
-          const copy = structuredClone(prev);
-          copy[category] = [];
-          return copy;
-        });
-
-        categoryWords.forEach((word) => {
-          setCatWords((prev) => {
-            const copy = structuredClone(prev);
-            copy[category].push({ title: word });
-            return copy;
-          });
-        });
-
-        console.log("words: ", categoryWords);
-      }
+      setUniqWords(uniqCards);
     }
 
     get_data();
   }, []);
-
-  useEffect(() => {
-    console.log("catWords: ", catWords);
-  }, [catWords]);
-
-  //   const response = await fetch(fetchUrl);
-  //   const json = await response.json();
-
-  //   console.log("stats:", json);
 
   return (
     <div>
@@ -86,9 +82,18 @@ function Statistics() {
         </thead>
 
         <tbody>
-          {Object.entries(catWords).map(([key, value]) => (
-            <CategoryTable categoryTitle={key} categoryWords={value} />
-          ))}
+          {Object.entries(uniqWords).map(([catTitle, cards]) => {
+            return (
+              <CategoryTable
+                key={catTitle}
+                categoryTitle={catTitle}
+                categoryWords={Object.values(cards)}
+                sortFunc={(prevCard, card) => {
+                  return prevCard.word < card.word ? 1 : 0;
+                }}
+              />
+            );
+          })}
         </tbody>
       </table>
     </div>

@@ -1,6 +1,8 @@
 import React from "react";
 
-function CategoryTable({ categoryTitle, categoryWords }) {
+function CategoryTable({ categoryTitle, categoryWords, sortFunc }) {
+  console.log();
+
   return (
     <>
       <tr>
@@ -8,18 +10,29 @@ function CategoryTable({ categoryTitle, categoryWords }) {
           <b>{categoryTitle}</b>
         </td>
       </tr>
-      {categoryWords.map((word) => (
-        <tr>
-          <td></td>
-          <td>{word.title}</td>
-          <td>{word.translation}</td>
+      {categoryWords
+        .sort((a, b) => (a.word > b.word ? 1 : 0))
+        .map((word) => (
+          <tr key={word.cardHash}>
+            <td></td>
+            <td>{word.word}</td>
+            <td>{word.translation}</td>
 
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-        </tr>
-      ))}
+            <td>{word.trainCounter}</td>
+            <td>{word.correctCounter}</td>
+            <td>{word.incorrectCounter}</td>
+            <td>
+              {Number(
+                (
+                  (word.correctCounter /
+                    (word.correctCounter + word.incorrectCounter)) *
+                  100
+                ).toFixed(0)
+              )}
+              %
+            </td>
+          </tr>
+        ))}
     </>
   );
 }
