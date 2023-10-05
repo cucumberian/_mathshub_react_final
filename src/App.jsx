@@ -9,17 +9,26 @@ import TemplatePage from "./pages/TemplatePage";
 
 import { v4 as uuidv4 } from "uuid";
 import Statistics from "./pages/Statistics";
+import Page404 from "./pages/Page404";
+import LoginPage from "./pages/LoginPage";
+import RegisterPage from "./pages/RegisterPage";
+
+import "./firebase";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <TemplatePage />,
+    errorElement: <Page404 />,
     children: [
       { index: true, element: <HomePage /> },
       { path: "category/:categoryId", element: <CategoryPage /> },
       { path: "statistics", element: <Statistics /> },
+      { path: "login", element: <LoginPage /> },
+      { path: "register", element: <RegisterPage /> },
     ],
   },
+  { path: "/404", element: <Page404 /> },
 ]);
 
 function App() {

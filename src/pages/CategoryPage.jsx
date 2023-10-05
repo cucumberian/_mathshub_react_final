@@ -20,6 +20,7 @@ import "./CategoryPage.css";
 import Modal from "../UI/Modal";
 import GameOver from "../components/GameOver/GameOver";
 import { sha256 } from "js-sha256";
+import { Navigate } from "react-router-dom";
 
 function CategoryPage() {
   const categoryId = useParams().categoryId;
@@ -28,9 +29,16 @@ function CategoryPage() {
   const categoryValue = useSelector(
     (store) => store.slova.categories[categoryId]
   );
+
+  if (categoryValue === undefined) {
+    return <Navigate to="/404" />;
+  }
+
   const firebaseUrl = useSelector((store) => store.dbSettings.firebaseUrl);
   const clickedCard = useSelector((store) => store.gameState.clickedCard);
+
   const cards = categoryValue.cards;
+
   const gameCards = useSelector((store) => store.gameState.cards);
 
   const startButtonHandler = () => {
