@@ -7,8 +7,7 @@ import { RouterProvider } from "react-router-dom";
 import { createBrowserRouter } from "react-router-dom";
 import TemplatePage from "./pages/TemplatePage";
 
-import { v4 as uuidv4 } from "uuid";
-import Statistics from "./pages/Statistics";
+import StatisticsPage from "./pages/StatisticsPage";
 import Page404 from "./pages/Page404";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
@@ -23,7 +22,7 @@ const router = createBrowserRouter([
     children: [
       { index: true, element: <HomePage /> },
       { path: "category/:categoryId", element: <CategoryPage /> },
-      { path: "statistics", element: <Statistics /> },
+      { path: "statistics", element: <StatisticsPage /> },
       { path: "login", element: <LoginPage /> },
       { path: "register", element: <RegisterPage /> },
     ],
@@ -32,13 +31,6 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
-  const userId = localStorage.getItem("userId");
-
-  if (userId === null) {
-    const uuid = uuidv4();
-    localStorage.setItem("userId", uuid);
-  }
-
   return <RouterProvider router={router} />;
 }
 

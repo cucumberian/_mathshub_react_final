@@ -1,9 +1,9 @@
 import React from "react";
 import { useEffect } from "react";
-
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
+import { useAuth } from "../hooks/useAuth";
 
 import { gameStateActions } from "../store/gameState-slice";
 import { STATE_TRAIN } from "../store/gameState-slice";
@@ -13,16 +13,19 @@ import { STATE_USER_INPUT } from "../store/gameState-slice";
 import { STATE_CHECK } from "../store/gameState-slice";
 import { STATE_GAME_OVER } from "../store/gameState-slice";
 
+import { Navigate } from "react-router-dom";
 import Card from "../components/Card/Card";
 import Scores from "../components/Scores/Scores";
-
-import "./CategoryPage.css";
 import Modal from "../UI/Modal";
 import GameOver from "../components/GameOver/GameOver";
+
 import { sha256 } from "js-sha256";
-import { Navigate } from "react-router-dom";
+import { shuffle } from "../utils/utils";
+
+import "./CategoryPage.css";
 
 function CategoryPage() {
+  const { authUser, sendData } = useAuth();
   const categoryId = useParams().categoryId;
   const dispatch = useDispatch();
   const gameState = useSelector((state) => state.gameState.gameState);
@@ -34,11 +37,8 @@ function CategoryPage() {
     return <Navigate to="/404" />;
   }
 
-  const firebaseUrl = useSelector((store) => store.dbSettings.firebaseUrl);
   const clickedCard = useSelector((store) => store.gameState.clickedCard);
-
-  const cards = categoryValue.cards;
-
+  const cards = shuffle(categoryValue.cards);
   const gameCards = useSelector((store) => store.gameState.cards);
 
   const startButtonHandler = () => {
@@ -54,7 +54,6 @@ function CategoryPage() {
   const gameCardClickHandler = (cardObject) => {
     // работает только в состоянии USER_INPUT
     if (gameState !== STATE_USER_INPUT) return;
-    console.log("Игра, клик по карте");
 
     const payload = {
       word: cardObject.word,
@@ -82,7 +81,11 @@ function CategoryPage() {
   };
 
   const flipCardFetcher = async (cardObject) => {
-    console.log("flipCardFetcher!!!!");
+    // не отправляю данные, если пользователь не залогинен
+    if (authUser === null) return;
+
+    // console.log("произносим карточку: ", cardObject);
+    // const soundObject = new Audio(`/src/assets/${cardObject.audioSrc}`);
     const payload = {
       word: cardObject.word,
       translation: cardObject.translation,
@@ -97,16 +100,13 @@ function CategoryPage() {
       }),
     };
 
-    const userId = localStorage.getItem("userId");
-    const serverUrl = `${firebaseUrl}/userAnswers/${userId}.json`;
-
-    const response = await fetch(serverUrl, {
-      method: "POST",
-      body: JSON.stringify(payload),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    sendData(payload)
+      .then(() => {
+        console.log("Данные отправлены на сервер");
+      })
+      .catch((error) => {
+        console.error("Ошибка при отправке данных на сервер: ", error);
+      });
   };
 
   async function initCheck() {
@@ -148,17 +148,16 @@ function CategoryPage() {
       dispatch(gameStateActions.badClick(payload));
     }
 
-    // отправляем данные на сервер
-    const userId = localStorage.getItem("userId");
-    const serverUrl = `${firebaseUrl}/userAnswers/${userId}.json`;
-
-    const response = await fetch(serverUrl, {
-      method: "POST",
-      body: JSON.stringify(payload),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    // отправляем данные на сервер если пользователь залогинен
+    if (authUser !== null) {
+      sendData(payload)
+        .then(() => {
+          console.log("Данные отправлены на сервер");
+        })
+        .catch((error) => {
+          console.error("Ошибка при отправке данных на сервер:", error);
+        });
+    }
   }
 
   function initGameOver() {

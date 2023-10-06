@@ -1,5 +1,7 @@
 import React from "react";
 import Register from "../components/Register/Register";
+import { Link } from "react-router-dom";
+import { useAuth } from "../hooks/useAuth";
 
 function RegisterPage() {
   return (

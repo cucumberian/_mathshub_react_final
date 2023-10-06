@@ -1,36 +1,33 @@
 import React from "react";
 import AuthForm from "../AuthForm/AuthForm";
-import { getAuth } from "firebase/auth";
+import { auth } from "../../firebase";
 
 import { signInWithEmailAndPassword } from "firebase/auth";
 
-import { useDispatch } from "react-redux";
-import { userSliceActions } from "../../store/userSlice";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../hooks/useAuth";
+import EnteredAsUser from "../EnteredAsUser/EnteredAsUser";
 
 function Login() {
+  const { authUser, setAuthUser } = useAuth();
   const navigate = useNavigate();
-  const dispatch = useDispatch();
 
   const handleLogin = ({ email, password }) => {
-    const auth = getAuth();
     signInWithEmailAndPassword(auth, email, password)
       .then(({ user }) => {
-        const payload = {
-          uid: user.uid,
-          email: user.email,
-          token: user.accessToken,
-        };
-        dispatch(userSliceActions.setUser(payload));
+        setAuthUser(user);
         navigate("/");
       })
-      .catch(console.errors);
+      .catch(console.error);
   };
 
   return (
     <>
-      <p>Login here</p>
-      <AuthForm buttonTitle="Войти" onSubmitFunc={handleLogin} />
+      {authUser !== null && <EnteredAsUser email={authUser.email} />}
+
+      {authUser === null && (
+        <AuthForm buttonTitle="Войти" onSubmitFunc={handleLogin} />
+      )}
     </>
   );
 }

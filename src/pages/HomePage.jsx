@@ -10,7 +10,7 @@ import { useAnonymRedirect } from "../hooks/useAnonymRedirect";
 
 function HomePage() {
   // const navigate = useNavigate();
-  const redirect = useAnonymRedirect("/login");
+  // const redirect = useAnonymRedirect("/login");
   // const userEmail = useSelector((store) => store.user.email);
 
   // if (!userEmail) {
@@ -21,8 +21,8 @@ function HomePage() {
 
   return (
     <>
-      <h1> Домашняя страница </h1>
-      <h2>Список категорий</h2>
+      <h1>Категории слов</h1>
+      <p>Выберите категорию для обучения</p>
 
       <div className="cards_grid">
         {categoriesCards.map((card, index) => (
