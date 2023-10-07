@@ -1,0 +1,16 @@
+header {
+  height: 40px;
+  width: 100%;
+
+  text-align: center;
+  background-color: rgb(61, 61, 61);
+  color: var(--color-white-primary);
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  a {
+    color: var(--color-white-primary);
+    font-weight: bold;
+  }
+}

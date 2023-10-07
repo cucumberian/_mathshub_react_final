@@ -5,7 +5,7 @@ import "./CardsGrid.css";
 
 function CardsGrid({ cards }) {
   return (
-    <div className="cards_grid">
+    <div className="cards_grid_flex">
       {cards.map((card, index) => (
         <Card
           key={index}

@@ -23,6 +23,7 @@ import { sha256 } from "js-sha256";
 import { shuffle } from "../utils/utils";
 
 import "./CategoryPage.css";
+import "../components/CardsGrid/CardsGrid.css";
 
 function CategoryPage() {
   const { authUser, sendData } = useAuth();
@@ -186,7 +187,7 @@ function CategoryPage() {
       {gameState === STATE_GAME_OVER && (
         <Modal>
           <GameOver />
-          <p>asdasdasdasd</p>
+          <p>Тестирование окончено</p>
         </Modal>
       )}
 
@@ -205,7 +206,7 @@ function CategoryPage() {
 
       <Scores />
 
-      <div className="cards_grid">
+      <div className="cards_grid_flex">
         {cards.map((card, index) => (
           <Card
             cardObject={card}

@@ -7,7 +7,7 @@ import store from "./store/index.js";
 
 import "./index.css";
 
-ReactDOM.createRoot(document.getElementById("root")).render(
+ReactDOM.createRoot(document.getElementById("main")).render(
   <Provider store={store}>
     <App />
   </Provider>

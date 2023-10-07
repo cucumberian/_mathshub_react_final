@@ -5,13 +5,13 @@ import { Link } from "react-router-dom";
 
 import LogoutButton from "../LogoutButton/LogoutButton";
 
-import "./UserHeader.css";
+import "./UserHeader.scss";
 
 function UserHeader() {
   const { authUser } = useAuth();
 
   return (
-    <div>
+    <div className="user_header">
       {authUser !== null && (
         <>
           <p>{authUser.email}</p>
@@ -21,10 +21,15 @@ function UserHeader() {
       )}
 
       {authUser === null && (
-        <p>
-          <Link to="/login">Войдите</Link> или&nbsp;
-          <Link to="/register">Зарегистрируйтесь</Link>
-        </p>
+        <>
+          <p>
+            <Link to="/login">Войдите</Link>
+          </p>
+          <p>или</p>
+          <p>
+            <Link to="/register">Зарегистрируйтесь</Link>
+          </p>
+        </>
       )}
     </div>
   );

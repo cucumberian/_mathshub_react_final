@@ -8,6 +8,8 @@ import CategoryCard from "../components/Card/CategoryCard";
 
 import { useAnonymRedirect } from "../hooks/useAnonymRedirect";
 
+import "../components/CardsGrid/CardsGrid.css";
+
 function HomePage() {
   // const navigate = useNavigate();
   // const redirect = useAnonymRedirect("/login");
@@ -24,7 +26,7 @@ function HomePage() {
       <h1>Категории слов</h1>
       <p>Выберите категорию для обучения</p>
 
-      <div className="cards_grid">
+      <div className="cards_grid_flex">
         {categoriesCards.map((card, index) => (
           <CategoryCard
             key={index}

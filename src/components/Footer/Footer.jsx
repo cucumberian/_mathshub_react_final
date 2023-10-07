@@ -1,11 +1,14 @@
 import React from "react";
 
-import "./Footer.css";
+import "./Footer.scss";
 
 function Footer({ children }) {
   return (
     <>
-      <p>footer</p>
+      <p>minini (x) 2023</p>
+      <a href="https://github.com/cucumberian/" target="_blank">
+        github
+      </a>
     </>
   );
 }

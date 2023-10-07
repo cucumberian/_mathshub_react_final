@@ -1,0 +1,29 @@
+.nav_menu {
+  ul {
+    margin: 0;
+    margin-block: 0;
+    padding: 0;
+    width: 100%;
+    list-style-type: none;
+
+    li {
+      width: 100%;
+      padding: 0.4rem 0;
+      a {
+        color: var(--color-white-primary);
+        display: block;
+        width: 100%;
+      }
+    }
+
+    li:hover {
+      background-color: var(--color-white-primary);
+      color: var(--color-dark-primary);
+      // filter: invert(1);
+      a {
+        color: var(--color-dark-primary);
+        text-shadow: none;
+      }
+    }
+  }
+}

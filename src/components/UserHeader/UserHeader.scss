@@ -1,0 +1,17 @@
+.user_header {
+  margin-top: 1rem;
+  padding: 0.5rem 0 1rem 0;
+  border: 1px solid rgba(0, 0, 0, 0.277);
+
+  color: var(--color-white-primary);
+  background-color: rgba(0, 0, 0, 0.216);
+
+  a {
+    color: var(--color-gold-primary);
+    font-weight: bold;
+    // text-shadow: 0 0 1px hsla(0, 0%, 1000%, 0.9525);
+  }
+  a:hover {
+    color: var(--color-gold-secondary);
+  }
+}
