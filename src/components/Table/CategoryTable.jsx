@@ -12,27 +12,28 @@ function CategoryTable({ categoryTitle, categoryWords, sortFunc }) {
       </tr>
       {categoryWords
         .sort((a, b) => (a.word > b.word ? 1 : 0))
-        .map((word) => (
-          <tr key={word.cardHash}>
-            <td></td>
-            <td>{word.word}</td>
-            <td>{word.translation}</td>
+        .map((word) => {
+          const percent = Number(
+            (
+              (word.correctCounter /
+                (word.correctCounter + word.incorrectCounter)) *
+              100
+            ).toFixed(0)
+          );
 
-            <td>{word.trainCounter}</td>
-            <td>{word.correctCounter}</td>
-            <td>{word.incorrectCounter}</td>
-            <td>
-              {Number(
-                (
-                  (word.correctCounter /
-                    (word.correctCounter + word.incorrectCounter)) *
-                  100
-                ).toFixed(0)
-              )}
-              %
-            </td>
-          </tr>
-        ))}
+          return (
+            <tr key={word.cardHash}>
+              <td></td>
+              <td>{word.word}</td>
+              <td>{word.translation}</td>
+
+              <td>{word.trainCounter}</td>
+              <td>{word.correctCounter}</td>
+              <td>{word.incorrectCounter}</td>
+              <td>{Number.isFinite(percent) ? percent : ""}</td>
+            </tr>
+          );
+        })}
     </>
   );
 }
