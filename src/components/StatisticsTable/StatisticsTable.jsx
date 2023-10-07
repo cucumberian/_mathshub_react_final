@@ -27,34 +27,47 @@ function StatisticsTable({ userAnswers }) {
     console.log("userAnswers:", userAnswers);
 
     const uniqCards = Object.values(userAnswers).reduce((acc, item) => {
-      if (!acc[item.categoryTitle]) {
-        acc[item.categoryTitle] = {};
-      } else {
-        if (acc[item.categoryTitle][item.cardHash]) {
-          // обновляем значения для статсиcтики карточки
-          acc[item.categoryTitle][item.cardHash] = {
-            ...item,
-            trainCounter:
-              (item.isTrain ? 1 : 0) +
-              acc[item.categoryTitle][item.cardHash].trainCounter,
-            correctCounter:
-              (!item.isTrain && item.isCorrect ? 1 : 0) +
-              acc[item.categoryTitle][item.cardHash].isCorrect,
-            incorrectCounter:
-              (!item.isTrain && item.isCorrect ? 0 : 1) +
-              acc[item.categoryTitle][item.cardHash].isCorrect,
-          };
-        } else {
-          // инициализация статистики для карточки
-          acc[item.categoryTitle][item.cardHash] = {
-            ...item,
-            trainCounter: item.isTrain ? 1 : 0,
-            correctCounter: item.isCorrect ? 1 : 0,
-            incorrectCounter: item.isCorrect ? 0 : 1,
-          };
-        }
+      const trainCounter = item.isTrain ? 1 : 0;
+      const correctCounter = item.isTrain ? 0 : item.correct;
+      const incorrectCounter = item.isTrain ? 0 : item.incorrect;
 
-        // acc[item.categoryTitle][item.cardHash] = item;
+      if (!acc[item.categoryTitle]) {
+        // случай если категории еще нет в общем объекте
+        // добавляем категорию и карточку в общий объект
+        acc[item.categoryTitle] = {
+          [item.cardHash]: {
+            ...item,
+            trainCounter: trainCounter,
+            correctCounter: correctCounter,
+            incorrectCounter: incorrectCounter,
+          },
+        };
+        return acc;
+      }
+
+      // сюда попадаем, если категория уже есть в общем объекте
+
+      if (acc[item.categoryTitle][item.cardHash]) {
+        // если карточка уже есть в категории, то
+        // обновляем значения для статиcтики карточки
+        acc[item.categoryTitle][item.cardHash] = {
+          ...item,
+          trainCounter:
+            trainCounter + acc[item.categoryTitle][item.cardHash].trainCounter,
+          correctCounter:
+            correctCounter + acc[item.categoryTitle][item.cardHash].correct,
+          incorrectCounter:
+            incorrectCounter + acc[item.categoryTitle][item.cardHash].incorrect,
+        };
+      } else {
+        // если карточки в категории нет, то добавляем её
+        // инициализация статистики для карточки
+        acc[item.categoryTitle][item.cardHash] = {
+          ...item,
+          trainCounter: trainCounter,
+          correctCounter: correctCounter,
+          incorrectCounter: incorrectCounter,
+        };
       }
 
       return acc;

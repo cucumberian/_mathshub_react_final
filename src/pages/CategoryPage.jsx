@@ -91,7 +91,8 @@ function CategoryPage() {
       translation: cardObject.translation,
       categoryTitle: categoryValue.title,
       isTrain: true,
-      isCorrect: null,
+      correct: 0,
+      incorrect: 0,
       date: new Date().getTime(),
       cardHash: createCardHash({
         categoryTitle: categoryValue.title,
@@ -126,7 +127,8 @@ function CategoryPage() {
       translation: trueCard.translation,
       categoryTitle: categoryValue.title,
       isTrain: false,
-      isCorrect: true,
+      correct: 0,
+      incorrect: 0,
       date: new Date().getTime(),
       cardHash: createCardHash({
         categoryTitle: categoryValue.title,
@@ -139,12 +141,12 @@ function CategoryPage() {
       // прибавить балл пользователю
       // убать карточку
       // перейти в стостояние SAY
-      payload.isCorrect = true;
+      payload.correct = 1;
       dispatch(gameStateActions.goodClick(payload));
     } else {
       // добавляем штрафной
       // переходим в user_input
-      payload["isCorrect"] = false;
+      payload["incorrect"] = 1;
       dispatch(gameStateActions.badClick(payload));
     }
 
