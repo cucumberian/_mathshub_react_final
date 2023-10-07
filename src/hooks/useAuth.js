@@ -7,7 +7,7 @@ import { onAuthStateChanged } from "firebase/auth";
 import { set } from "firebase/database";
 import { ref } from "firebase/database";
 import { get } from "firebase/database";
-import { v4 as uuidv4 } from "uuid";
+import { v1 as uuidv1 } from "uuid";
 
 function useAuth() {
   const [authUser, setAuthUser] = useState(null);
@@ -46,16 +46,18 @@ function useAuth() {
   };
 
   const sendData = (payload) => {
-    if (authUser === null) return Promise.reject();
+    if (authUser === null)
+      return Promise.reject(new Error("User is not authenticated"));
     // генерация ид для собщения
-    const uuid = uuidv4();
+    const uuid = uuidv1();
     // ссылка на путь в базе данных
     const dbRef = ref(database, `/userAnswers/${authUser.uid}/${uuid}/`);
     return set(dbRef, payload);
   };
 
   const getData = () => {
-    if (authUser === null) return Promise.reject();
+    if (authUser === null)
+      return Promise.reject(new Error("User is not authenticated"));
     const dbRef = ref(database, `/userAnswers/${authUser.uid}`);
     return get(dbRef);
   };

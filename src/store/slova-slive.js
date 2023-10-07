@@ -110,6 +110,86 @@ const initialSlovaState = {
         },
       ],
     },
+
+    {
+      title: "Actions (set C)",
+      image: "",
+      cards: [
+        {
+          word: "read",
+          translation: "читать",
+          image: "img/read.jpg",
+          audioSrc: "audio/ukrayon025.mp3",
+        },
+        {
+          word: "sleep",
+          translation: "спать",
+          image: "img/sleep.jpg",
+          audioSrc: "audio/ukslave022.mp3",
+        },
+        {
+          word: "write",
+          translation: "писать",
+          image: "img/write.jpg",
+          audioSrc: "audio/ukrider015.mp3",
+        },
+        {
+          word: "eat",
+          translation: "есть",
+          image: "img/eat.jpg",
+          audioSrc: "audio/ukeasil014.mp3",
+        },
+        {
+          word: "study",
+          translation: "учиться",
+          image: "img/study.jpg",
+          audioSrc: "audio/ukstubb018.mp3",
+        },
+        {
+          word: "drive",
+          translation: "водить машину",
+          image: "img/drive.jpg",
+          audioSrc: "audio/ukdress028.mp3",
+        },
+        {
+          word: "travel",
+          translation: "путешествовать",
+          image: "img/travel.jpg",
+          audioSrc: "audio/uktrap_019.mp3",
+        },
+        {
+          word: "sing",
+          translation: "петь",
+          image: "img/sing.jpg",
+          audioSrc: "audio/uksineq007.mp3",
+        },
+        {
+          word: "dance",
+          translation: "танцевать",
+          image: "img/dance.jpg",
+          audioSrc: "audio/ukdamne011.mp3",
+        },
+        {
+          word: "work",
+          translation: "работать",
+          image: "img/work.jpg",
+          audioSrc: "audio/ukwordp005.mp3",
+        },
+        {
+          word: "play",
+          translation: "играть",
+          image: "img/play.jpg",
+          audioSrc: "audio/ukplate018.mp3",
+        },
+        {
+          word: "exercise",
+          translation: "заниматься упражнениями",
+          image: "img/exercise.jpg",
+          audioSrc: "audio/ukexcre029.mp3",
+        },
+      ],
+    },
+
     {
       title: "Animal (set A)",
       image: "",
@@ -164,6 +244,7 @@ const initialSlovaState = {
         },
       ],
     },
+
     {
       title: "Animal (set B)",
       image: "",
@@ -218,6 +299,7 @@ const initialSlovaState = {
         },
       ],
     },
+
     {
       title: "Clothes",
       image: "",
@@ -272,6 +354,7 @@ const initialSlovaState = {
         },
       ],
     },
+
     {
       title: "Emotions",
       image: "",
@@ -323,6 +406,158 @@ const initialSlovaState = {
           translation: "смех",
           image: "img/laugh.jpg",
           audioSrc: "audio/laugh.mp3",
+        },
+
+        {
+          word: "calm",
+          translation: "спокойный",
+          image: "img/calm.jpg",
+          audioSrc: "audio/ukcalip014.mp3",
+        },
+        {
+          word: "excited",
+          translation: "возбужденный",
+          image: "img/excited.jpg",
+          audioSrc: "audio/ukexces012.mp3",
+        },
+        {
+          word: "curious",
+          translation: "любопытный",
+          image: "img/curious.jpg",
+          audioSrc: "audio/ukcurio002.mp3",
+        },
+        {
+          word: "relaxed",
+          translation: "расслабленный",
+          image: "img/relaxed.jpg",
+          audioSrc: "audio/ukrejec024.mp3",
+        },
+        {
+          word: "confident",
+          translation: "уверенный",
+          image: "img/confident.jpg",
+          audioSrc: "audio/ukcondu025.mp3",
+        },
+        {
+          word: "shy",
+          translation: "застенчивый",
+          image: "img/shy.jpg",
+          audioSrc: "audio/ukshun_013.mp3",
+        },
+        {
+          word: "proud",
+          translation: "гордый",
+          image: "img/proud.jpg",
+          audioSrc: "audio/ukprote028.mp3",
+        },
+        {
+          word: "anxious",
+          translation: "тревожный",
+          image: "img/anxious.jpg",
+          audioSrc: "audio/ukantis012.mp3",
+        },
+        {
+          word: "amazed",
+          translation: "пораженный",
+          image: "img/amazed.jpg",
+          audioSrc: "audio/ukamalg013.mp3",
+        },
+        {
+          word: "grateful",
+          translation: "благодарный",
+          image: "img/grateful.jpg",
+          audioSrc: "audio/ukgrate001.mp3",
+        },
+        {
+          word: "lonely",
+          translation: "одинокий",
+          image: "img/lonely.jpg",
+          audioSrc: "audio/uklonel001.mp3",
+        },
+        {
+          word: "energetic",
+          translation: "энергичный",
+          image: "img/energetic.jpg",
+          audioSrc: "audio/ukendwa005.mp3",
+        },
+      ],
+    },
+
+    {
+      title: "Adjective",
+      image: "",
+      cards: [
+        {
+          word: "tall",
+          translation: "высокий",
+          image: "img/tall.jpg",
+          audioSrc: "audio/uktajik024.mp3",
+        },
+        {
+          word: "short",
+          translation: "низкий",
+          image: "img/short.jpg",
+          audioSrc: "audio/ukshorn002.mp3",
+        },
+        {
+          word: "strong",
+          translation: "сильный",
+          image: "img/strong.jpg",
+          audioSrc: "audio/ukstrol002.mp3",
+        },
+        {
+          word: "weak",
+          translation: "слабый",
+          image: "img/weak.jpg",
+          audioSrc: "audio/ukwaxwo015.mp3",
+        },
+        {
+          word: "smart",
+          translation: "умный",
+          image: "img/smart.jpg",
+          audioSrc: "audio/ukslutt023.mp3",
+        },
+        {
+          word: "clumsy",
+          translation: "неуклюжий",
+          image: "img/clumsy.jpg",
+          audioSrc: "audio/ukclosu026.mp3",
+        },
+        {
+          word: "brave",
+          translation: "смелый",
+          image: "img/brave.jpg",
+          audioSrc: "audio/ukbrain026.mp3",
+        },
+        {
+          word: "gentle",
+          translation: "нежный",
+          image: "img/gentle.jpg",
+          audioSrc: "audio/ukgenit014.mp3",
+        },
+        {
+          word: "patient",
+          translation: "терпеливый",
+          image: "img/patient.jpg",
+          audioSrc: "audio/ukpatie002.mp3",
+        },
+        {
+          word: "creative",
+          translation: "творческий",
+          image: "img/creative.jpg",
+          audioSrc: "audio/ukcream007.mp3",
+        },
+        {
+          word: "logical",
+          translation: "логичный",
+          image: "img/logical.jpg",
+          audioSrc: "audio/uklogar008.mp3",
+        },
+        {
+          word: "organized",
+          translation: "организованный",
+          image: "img/organized.jpg",
+          audioSrc: "audio/ukordin012.mp3",
         },
       ],
     },

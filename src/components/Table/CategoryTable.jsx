@@ -1,8 +1,6 @@
 import React from "react";
 
 function CategoryTable({ categoryTitle, categoryWords, sortFunc }) {
-  console.log();
-
   return (
     <>
       <tr>
