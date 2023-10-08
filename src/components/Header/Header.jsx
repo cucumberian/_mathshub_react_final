@@ -1,6 +1,5 @@
 import React from "react";
 import Navbar from "../Navbar/Navbar";
-import UserHeader from "../UserHeader/UserHeader";
 import GameStateCheckbox from "../GameStateCheckbox/GameStateCheckbox";
 import { Link } from "react-router-dom";
 

@@ -1,6 +1,6 @@
 import React from "react";
 
-import "./StatisticsPage.css";
+import "./StatisticsPage.scss";
 
 import { useAuth } from "../hooks/useAuth";
 import { Link } from "react-router-dom";

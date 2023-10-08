@@ -1,13 +1,16 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
 import { useAuth } from "../../hooks/useAuth";
+import { ref } from "firebase/database";
+import { set } from "firebase/database";
 
 import CategoryTable from "../Table/CategoryTable";
 
 import "./StatisticsTable.css";
+import { database } from "../../firebase";
 
-function StatisticsTable({ userAnswers }) {
-  const { getData, authUser } = useAuth();
+function StatisticsTable() {
+  const { getData, sendData, authUser } = useAuth();
   const [uniqWords, setUniqWords] = useState({});
 
   useEffect(() => {
@@ -79,35 +82,54 @@ function StatisticsTable({ userAnswers }) {
     setUniqWords(uniqCards);
   }
 
-  return (
-    <table>
-      <thead>
-        <tr>
-          <th>Categories</th>
-          <th>Words</th>
-          <th>Translation</th>
-          <th>Trained</th>
-          <th>Correct</th>
-          <th>Incorrect</th>
-          <th>%</th>
-        </tr>
-      </thead>
+  const deleteUserStatisticsHandler = () => {
+    const dbRef = ref(database, `/userAnswers/${authUser.uid}`);
+    set(dbRef, {})
+      .then(() => {
+        console.log("Статистика удалена");
+        processAnswers({});
+      })
+      .catch((error) => console.error("Ошибка при удалении статистики", error));
+  };
 
-      <tbody>
-        {Object.entries(uniqWords).map(([catTitle, cards]) => {
-          return (
-            <CategoryTable
-              key={catTitle}
-              categoryTitle={catTitle}
-              categoryWords={Object.values(cards)}
-              sortFunc={(prevCard, card) => {
-                return prevCard.word < card.word ? 1 : 0;
-              }}
-            />
-          );
-        })}
-      </tbody>
-    </table>
+  return (
+    <>
+      <table>
+        <thead>
+          <tr>
+            <th>Categories</th>
+            <th>Words</th>
+            <th>Translation</th>
+            <th>Trained</th>
+            <th>Correct</th>
+            <th>Incorrect</th>
+            <th>%</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          {Object.entries(uniqWords).map(([catTitle, cards]) => {
+            return (
+              <CategoryTable
+                key={catTitle}
+                categoryTitle={catTitle}
+                categoryWords={Object.values(cards)}
+                sortFunc={(prevCard, card) => {
+                  return prevCard.word < card.word ? 1 : 0;
+                }}
+              />
+            );
+          })}
+        </tbody>
+      </table>
+
+      <button
+        className="delete_stats_button"
+        onClick={deleteUserStatisticsHandler}
+      >
+        Удалить статистику
+      </button>
+    </>
   );
 }
 
