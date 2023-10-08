@@ -2,6 +2,7 @@ import React from "react";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { useMemo } from "react";
 import { useDispatch } from "react-redux";
 import { useAuth } from "../hooks/useAuth";
 
@@ -22,8 +23,9 @@ import GameOver from "../components/GameOver/GameOver";
 import { sha256 } from "js-sha256";
 import { shuffle } from "../utils/utils";
 
-import "./CategoryPage.css";
-import "../components/CardsGrid/CardsGrid.css";
+import "./CategoryPage.scss";
+import "../components/CardsGrid/CardsGrid.scss";
+import GamePlayButtons from "../components/GamePlayButtons/GamePlayButtons";
 
 function CategoryPage() {
   const { authUser, sendData } = useAuth();
@@ -39,11 +41,11 @@ function CategoryPage() {
   }
 
   const clickedCard = useSelector((store) => store.gameState.clickedCard);
-  const cards = shuffle(categoryValue.cards);
+  const cards = useMemo(() => shuffle(categoryValue.cards), [categoryValue]);
   const gameCards = useSelector((store) => store.gameState.cards);
 
   const startButtonHandler = () => {
-    const payload = { cards: cards };
+    const payload = { cards: shuffle(cards) };
     dispatch(gameStateActions.startGame(payload));
   };
 
@@ -68,10 +70,14 @@ function CategoryPage() {
 
   function initSay() {
     if (gameState !== STATE_SAY) return;
+
     const first_card = gameCards[0];
     console.log("произносим 0 карточку: ", first_card);
     const soundObject = new Audio(`/src/assets/${first_card.audioSrc}`);
-    soundObject.play();
+    setTimeout(() => {
+      soundObject.play();
+    }, 500);
+
     dispatch(gameStateActions.changeState(STATE_USER_INPUT));
   }
 
@@ -142,11 +148,21 @@ function CategoryPage() {
       // прибавить балл пользователю
       // убать карточку
       // перейти в стостояние SAY
+      const sound = new Audio(
+        "/src/assets/audio/mixkit-achievement-bell-600.wav"
+      );
+      sound.play();
+
       payload.correct = 1;
       dispatch(gameStateActions.goodClick(payload));
     } else {
       // добавляем штрафной
       // переходим в user_input
+      const sound = new Audio(
+        "/src/assets/audio/mixkit-arcade-game-jump-coin-216.wav"
+      );
+
+      sound.play();
       payload["incorrect"] = 1;
       dispatch(gameStateActions.badClick(payload));
     }
@@ -166,6 +182,7 @@ function CategoryPage() {
   function initGameOver() {
     if (gameState !== STATE_GAME_OVER) return;
     // выводим количество ответов верных и неверных
+    console.log("state =", gameState);
     console.log("Game Over");
   }
 
@@ -182,27 +199,24 @@ function CategoryPage() {
     }
   }, [categoryId]);
 
+  const modalCloseHandler = () => {
+    dispatch(gameStateActions.finishGame());
+  };
+
   return (
     <>
       {gameState === STATE_GAME_OVER && (
-        <Modal>
-          <GameOver />
-          <p>Тестирование окончено</p>
+        <Modal closeHandler={modalCloseHandler}>
+          <GameOver closeHandler={modalCloseHandler} />
         </Modal>
       )}
 
       <h1>Категория {categoryValue.title}</h1>
 
-      {gameState !== STATE_TRAIN && (
-        <div>
-          <button type="button" onClick={startButtonHandler}>
-            start
-          </button>
-          <button type="button" onClick={repeatButtonHandler}>
-            repeat
-          </button>
-        </div>
-      )}
+      <GamePlayButtons
+        startHandler={startButtonHandler}
+        repeatHandler={repeatButtonHandler}
+      />
 
       <Scores />
 

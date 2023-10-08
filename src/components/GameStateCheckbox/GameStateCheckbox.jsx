@@ -4,7 +4,10 @@ import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { STATE_TRAIN, gameStateActions } from "../../store/gameState-slice";
 
+import { TfiGithub } from "react-icons/tfi";
 import "./GameStateCheckbox.scss";
+
+import { LuCat } from "react-icons/lu";
 
 function GameStateCheckbox() {
   const dispatch = useDispatch();
@@ -24,6 +27,7 @@ function GameStateCheckbox() {
     <div className="checkbox_container">
       <label id="game_switch" className="game_switch">
         <input type="checkbox" onChange={toggleHandler} value="true" />
+        <LuCat className="slider_before" />
         <span className="slider round"></span>
         {checkboxText}
       </label>

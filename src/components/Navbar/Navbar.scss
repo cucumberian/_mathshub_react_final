@@ -5,6 +5,7 @@
   align-items: start;
 
   .navbar_button {
+    position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -14,10 +15,15 @@
     color: white;
     background-color: #3d3d3d;
     cursor: pointer;
+    z-index: 10;
   }
   .navbar_button:hover {
     background-color: white;
     color: #3d3d3d;
+  }
+  .navbar_button.close {
+    background-color: transparent;
+    border: none;
   }
 
   .navbar_label {
@@ -27,29 +33,25 @@
   .navbar_menu {
     position: absolute;
     overflow: hidden;
-    height: calc(100vh - 80px);
-    width: 0;
+    top: 0;
+    left: 0;
+    width: 300px;
+    height: 600px;
     transition: 1s;
     background: hsla(0, 0%, 14%, 0.659);
     backdrop-filter: blur(5px);
-  }
 
-  .navbar_checkbox:checked + .navbar_menu {
-    overflow: hidden;
-    top: 40px;
-    left: 0;
-    display: block;
-    width: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 
-    transition: 1s;
-  }
-
-  .navbar_checkbox {
-    display: none;
-    transition: 1s;
+    border-bottom-right-radius: 20px;
   }
 
   .hidden {
+    width: 0;
+    height: 0;
+    transition: 1s;
     display: none;
   }
 }

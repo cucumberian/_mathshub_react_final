@@ -1,0 +1,15 @@
+.game_over {
+  width: calc(min(80vw, 300px));
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  button {
+    margin: 1rem auto;
+  }
+  a:hover {
+    color: var(--color-blue-primary);
+    text-shadow: none;
+  }
+}

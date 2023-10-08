@@ -1,24 +1,10 @@
 import React from "react";
-
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { Navigate } from "react-router-dom";
-
 import CategoryCard from "../components/Card/CategoryCard";
 
-import { useAnonymRedirect } from "../hooks/useAnonymRedirect";
-
-import "../components/CardsGrid/CardsGrid.css";
+import "../components/CardsGrid/CardsGrid.scss";
 
 function HomePage() {
-  // const navigate = useNavigate();
-  // const redirect = useAnonymRedirect("/login");
-  // const userEmail = useSelector((store) => store.user.email);
-
-  // if (!userEmail) {
-  //   return <Navigate to="/login" />;
-  // }
-
   const categoriesCards = useSelector((store) => store.slova.categories);
 
   return (
@@ -31,7 +17,7 @@ function HomePage() {
           <CategoryCard
             key={index}
             title={card.title}
-            imageUrl={card.imageUrl}
+            imageUrl={`/src/assets/${card.image}`}
             id={index}
           />
         ))}

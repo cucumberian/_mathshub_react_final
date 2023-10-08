@@ -7,6 +7,7 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
 import EnteredAsUser from "../EnteredAsUser/EnteredAsUser";
+import { Link } from "react-router-dom";
 
 function Login() {
   const { authUser, setAuthUser } = useAuth();
@@ -26,7 +27,12 @@ function Login() {
       {authUser !== null && <EnteredAsUser email={authUser.email} />}
 
       {authUser === null && (
-        <AuthForm buttonTitle="Войти" onSubmitFunc={handleLogin} />
+        <>
+          <AuthForm buttonTitle="Войти" onSubmitFunc={handleLogin} />
+          <p>
+            Или <Link to="/register">зарегистрируйтесь</Link>
+          </p>
+        </>
       )}
     </>
   );

@@ -1,11 +1,8 @@
 import React from "react";
 import { useState } from "react";
-import { useRef } from "react";
 
-import { HiRefresh } from "react-icons/hi";
-import { AiFillSound } from "react-icons/ai";
-
-import "./Card.css";
+import "./Card.scss";
+import CardSide from "./CardSide/CardSide";
 
 function Card({ cardObject, gameCardClickHandler, flipCardFetcher }) {
   const [isFlip, setIsFlip] = useState(false);
@@ -29,47 +26,23 @@ function Card({ cardObject, gameCardClickHandler, flipCardFetcher }) {
         gameCardClickHandler(cardObject);
       }}
     >
-      <div className={`card_front ${isFlip && "card_rotated"}`}>
-        <AiFillSound
-          className="card_sound action"
-          title="ЗВУК"
-          onClick={playSoundHandler}
-        />
+      <CardSide
+        isFlip={isFlip}
+        className="card_front"
+        soundHandler={playSoundHandler}
+        flipCardHandler={flipCardHandler}
+        cardObject={cardObject}
+        word={cardObject.word}
+      />
 
-        <HiRefresh
-          className="card_flip action"
-          title="ПЕРЕВЕРНУТЬ"
-          onClick={flipCardHandler}
-        />
-
-        <img
-          // src={`/src/assets/${cardObject.image}`}
-          alt={cardObject.word}
-          className="card_image "
-        />
-        <h4>{cardObject.word}</h4>
-      </div>
-
-      <div className={`card_back ${isFlip && "card_rotated"}`}>
-        <AiFillSound
-          className="card_sound action"
-          title="ЗВУК"
-          onClick={playSoundHandler}
-        />
-
-        <HiRefresh
-          className="card_flip action"
-          title="ПЕРЕВЕРНУТЬ"
-          onClick={flipCardHandler}
-        />
-
-        <img
-          // src={`/src/assets/${imageUrl}`}
-          alt={cardObject.word}
-          className="card_image "
-        />
-        <h4>{cardObject.translation}</h4>
-      </div>
+      <CardSide
+        className="card_back"
+        isFlip={isFlip}
+        soundHandler={playSoundHandler}
+        flipCardHandler={flipCardHandler}
+        cardObject={cardObject}
+        word={cardObject.translation}
+      />
     </div>
   );
 }

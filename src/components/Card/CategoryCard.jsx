@@ -1,13 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import Image from "../../UI/Image";
 
-import "./Card.css";
+import "./CategoryCard.scss";
 
-function CategoryCard({ id, title, image }) {
+function CategoryCard({ id, title, imageUrl }) {
   return (
-    <div className="card">
+    <div className="category_card">
       <Link to={`./category/${id}`}>
-        <img src={image} alt="картинка категории" />
+        <Image className="card_image" src={imageUrl} alt="картинка категории" />
         <h4>{title}</h4>
       </Link>
     </div>
