@@ -207,7 +207,7 @@ function CategoryPage() {
     <>
       {gameState === STATE_GAME_OVER && (
         <Modal closeHandler={modalCloseHandler}>
-          <GameOver closeHandler={modalCloseHandler} />
+          <GameOver />
         </Modal>
       )}
 

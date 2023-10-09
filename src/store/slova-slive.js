@@ -172,7 +172,7 @@ const initialSlovaState = {
         {
           word: "work",
           translation: "работать",
-          image: "img/00060-3188653949.png",
+          image: "img/00060-3188653949npm run .png",
           audioSrc: "audio/ukwordp005.mp3",
         },
         {
@@ -386,7 +386,7 @@ const initialSlovaState = {
         {
           word: "surprised",
           translation: "удивлённый",
-          image: "img/00523-3735875895.png",
+          image: "img/_f89fdd8a-f61e-4119-9e82-074d1ace3084.jpeg",
           audioSrc: "audio/uksurge018.mp3",
         },
         {

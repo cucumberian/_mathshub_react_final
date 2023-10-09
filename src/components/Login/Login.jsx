@@ -8,9 +8,11 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
 import EnteredAsUser from "../EnteredAsUser/EnteredAsUser";
 import { Link } from "react-router-dom";
+import Modal from "../../UI/Modal";
 
 function Login() {
   const { authUser, setAuthUser } = useAuth();
+  const [loginError, setLoginError] = React.useState(null);
   const navigate = useNavigate();
 
   const handleLogin = ({ email, password }) => {
@@ -19,11 +21,24 @@ function Login() {
         setAuthUser(user);
         navigate("/");
       })
-      .catch(console.error);
+      .catch((error) => {
+        setLoginError(error.message);
+        console.error(error);
+      });
   };
 
   return (
     <>
+      {loginError && (
+        <Modal
+          closeHandler={() => {
+            setLoginError(null);
+          }}
+        >
+          <p>Ошибка: неверные логин или пароль</p>
+        </Modal>
+      )}
+
       {authUser !== null && <EnteredAsUser email={authUser.email} />}
 
       {authUser === null && (

@@ -4,14 +4,12 @@ import { useMemo } from "react";
 import { useEffect } from "react";
 
 import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
-import { gameStateActions } from "../../store/gameState-slice";
 
 import { Link } from "react-router-dom";
 
 import "./GameOver.scss";
 
-function GameOver({ closeHandler }) {
+function GameOver() {
   const userAnswers = useSelector((state) => state.gameState.userAnswers);
 
   const numErrors = useMemo(
@@ -33,17 +31,10 @@ function GameOver({ closeHandler }) {
     }
   }, []);
 
-  const gameOverButtonClick = () => {
-    closeHandler();
-  };
-
   return (
     <div className="game_over">
       <Scores />
       <p>Ошибок: {numErrors}</p>
-      <button type="button" onClick={gameOverButtonClick}>
-        OK
-      </button>
       <Link to="/statistics">Посмотреть статистику</Link>
     </div>
   );

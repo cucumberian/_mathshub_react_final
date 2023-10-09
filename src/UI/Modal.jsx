@@ -11,8 +11,11 @@ function Modal({ children, closeHandler }) {
     <>
       {ReactDOM.createPortal(
         <div className="modal_overlay" onClick={closeHandler}>
-          <div className="modal" onClick={closeHandler}>
+          <div className="modal">
             {children}
+            <button className="close_modal" onClick={closeHandler}>
+              Закрыть
+            </button>
           </div>
         </div>,
         modalOverlay
