@@ -48,9 +48,8 @@
     top: 0;
     bottom: 0;
     margin: auto 0;
-    color: hsl(91, 66%, 39%);
+    color: var(--color-dark-primary);
     background-color: transparent;
-    // box-shadow: 0 0px 15px #2020203d;
     transition: 0.4s;
   }
 

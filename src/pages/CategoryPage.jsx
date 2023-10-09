@@ -91,8 +91,6 @@ function CategoryPage() {
     // не отправляю данные, если пользователь не залогинен
     if (authUser === null) return;
 
-    // console.log("произносим карточку: ", cardObject);
-    // const soundObject = new Audio(`/src/assets/${cardObject.audioSrc}`);
     const payload = {
       word: cardObject.word,
       translation: cardObject.translation,
@@ -120,7 +118,6 @@ function CategoryPage() {
   async function initCheck() {
     if (gameState !== STATE_CHECK) return;
 
-    console.log("Привет CHECK");
     // смотрим что кликнутая картока совпадает с произнесенной
     const trueCard = gameCards[0];
     const trueWord = trueCard.word;
@@ -182,8 +179,6 @@ function CategoryPage() {
   function initGameOver() {
     if (gameState !== STATE_GAME_OVER) return;
     // выводим количество ответов верных и неверных
-    console.log("state =", gameState);
-    console.log("Game Over");
   }
 
   useEffect(() => {

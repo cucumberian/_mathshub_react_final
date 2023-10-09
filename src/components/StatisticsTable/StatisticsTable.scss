@@ -1,0 +1,28 @@
+table,
+td,
+th {
+  border: 1px solid gray;
+}
+
+table {
+  width: 90%;
+  border-collapse: collapse;
+  margin: 0 auto;
+}
+
+@media screen and (max-width: 500px) {
+  table {
+    font-size: 0.8rem;
+  }
+}
+@media screen and (max-width: 400px) {
+  table {
+    font-size: 0.7rem;
+  }
+}
+
+@media screen and (max-width: 350px) {
+  table {
+    font-size: 0.6rem;
+  }
+}

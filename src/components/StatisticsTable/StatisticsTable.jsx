@@ -6,7 +6,7 @@ import { set } from "firebase/database";
 
 import CategoryTable from "../Table/CategoryTable";
 
-import "./StatisticsTable.css";
+import "./StatisticsTable.scss";
 import { database } from "../../firebase";
 
 function StatisticsTable() {
@@ -17,7 +17,6 @@ function StatisticsTable() {
     if (authUser !== null) {
       getData()
         .then((snapshot) => {
-          console.log("get data");
           if (snapshot.exists()) {
             processAnswers(snapshot.val());
           }

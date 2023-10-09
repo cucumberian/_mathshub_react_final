@@ -16,7 +16,6 @@ function Navbar() {
   const toggleMenu = (e) => {
     e.stopPropagation();
     e.preventDefault();
-    console.log("mouse Down");
     setIsOpen((prev) => !prev);
   };
 
