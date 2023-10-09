@@ -5,12 +5,20 @@ import UserHeader from "../UserHeader/UserHeader";
 
 import "./NavMenu.scss";
 
-function NavMenu({ className }) {
+function NavMenu({ className, closeMenu }) {
   const categories = useSelector((store) => store.slova.categories);
   const randNum = React.useMemo(() => Math.random());
 
   return (
-    <div className={`nav_menu ${className}`}>
+    <div
+      className={`nav_menu ${className}`}
+      onClick={() => {
+        console.log("click");
+        setTimeout(() => {
+          closeMenu();
+        }, 500);
+      }}
+    >
       <nav>
         <ul>
           <li>

@@ -72,9 +72,7 @@ const gameStateSliceConfig = {
       const cards = state.cards.map((proxyCard) =>
         Object.fromEntries(Object.entries(proxyCard))
       );
-      console.log("cards", cards);
       cards.shift();
-
       state.cards = cards;
 
       if (cards.length === 0) {

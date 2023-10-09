@@ -19,7 +19,7 @@ function CardSide({
 
   return (
     <div className={` ${props.className} ${props.isFlip && "card_rotated"}`}>
-      {gameState === STATE_TRAIN && (
+      {gameState === STATE_TRAIN && !props.isFlip && (
         <>
           <AiFillSound
             className="card_sound action"

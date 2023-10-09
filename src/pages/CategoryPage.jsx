@@ -14,7 +14,7 @@ import { STATE_USER_INPUT } from "../store/gameState-slice";
 import { STATE_CHECK } from "../store/gameState-slice";
 import { STATE_GAME_OVER } from "../store/gameState-slice";
 
-import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Card from "../components/Card/Card";
 import Scores from "../components/Scores/Scores";
 import Modal from "../UI/Modal";
@@ -28,6 +28,7 @@ import "../components/CardsGrid/CardsGrid.scss";
 import GamePlayButtons from "../components/GamePlayButtons/GamePlayButtons";
 
 function CategoryPage() {
+  const navigate = useNavigate();
   const { authUser, sendData } = useAuth();
   const categoryId = useParams().categoryId;
   const dispatch = useDispatch();
@@ -37,7 +38,7 @@ function CategoryPage() {
   );
 
   if (categoryValue === undefined) {
-    return <Navigate to="/404" />;
+    return navigate("/404");
   }
 
   const clickedCard = useSelector((store) => store.gameState.clickedCard);
@@ -196,6 +197,9 @@ function CategoryPage() {
 
   const modalCloseHandler = () => {
     dispatch(gameStateActions.finishGame());
+    setTimeout(() => {
+      navigate("/");
+    }, 500);
   };
 
   return (
@@ -222,6 +226,11 @@ function CategoryPage() {
             key={index}
             gameCardClickHandler={gameCardClickHandler}
             flipCardFetcher={flipCardFetcher}
+            cardHash={createCardHash({
+              categoryTitle: categoryValue.title,
+              word: card.word,
+              translation: card.translation,
+            })}
           />
         ))}
       </div>

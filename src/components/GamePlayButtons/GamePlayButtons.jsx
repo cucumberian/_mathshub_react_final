@@ -21,11 +21,13 @@ function GamePlayButtons({ startHandler, repeatHandler }) {
               <FaPlay onClick={startHandler} title="Начать игру" />
             </button>
           ) : (
-            <button type="button" className="game_button">
-              <FaClockRotateLeft
-                onClick={repeatHandler}
-                title="Повторить слово"
-              />
+            <button
+              type="button"
+              className="game_button"
+              onClick={repeatHandler}
+              title="Повторить слово"
+            >
+              <FaClockRotateLeft />
             </button>
           )}
         </div>

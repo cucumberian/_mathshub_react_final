@@ -10,7 +10,12 @@ function Modal({ children, closeHandler }) {
   return (
     <>
       {ReactDOM.createPortal(
-        <div className="modal_overlay" onClick={closeHandler}>
+        <div
+          className="modal_overlay"
+          onClick={(e) => {
+            if (e.currentTarget === e.target) closeHandler();
+          }}
+        >
           <div className="modal">
             {children}
             <button className="close_modal" onClick={closeHandler}>

@@ -9,7 +9,6 @@ function Navbar() {
   const [isOpen, setIsOpen] = React.useState(false);
 
   const closeMenu = (e) => {
-    if (e.currentTarget === e.target) return;
     setIsOpen(false);
   };
 
