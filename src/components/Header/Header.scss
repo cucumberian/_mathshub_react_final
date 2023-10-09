@@ -13,4 +13,13 @@ header {
     color: var(--color-white-primary);
     font-weight: bold;
   }
+  a:hover {
+    color: var(--color-gold-primary);
+  }
+
+  @media screen and (max-width: 350px) {
+    h2 {
+      font-size: 1.1rem;
+    }
+  }
 }

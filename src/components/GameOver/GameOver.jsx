@@ -4,12 +4,14 @@ import { useMemo } from "react";
 import { useEffect } from "react";
 
 import { useSelector } from "react-redux";
+import { useAuth } from "../../hooks/useAuth";
 
 import { Link } from "react-router-dom";
 
 import "./GameOver.scss";
 
 function GameOver() {
+  const { authUser } = useAuth();
   const userAnswers = useSelector((state) => state.gameState.userAnswers);
 
   const numErrors = useMemo(
@@ -35,7 +37,7 @@ function GameOver() {
     <div className="game_over">
       <Scores />
       <p>Ошибок: {numErrors}</p>
-      <Link to="/statistics">Посмотреть статистику</Link>
+      {authUser !== null && <Link to="/statistics">Посмотреть статистику</Link>}
     </div>
   );
 }
