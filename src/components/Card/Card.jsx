@@ -1,29 +1,35 @@
 import React from "react";
 import { useState } from "react";
 
-import "./Card.scss";
 import CardSide from "./CardSide/CardSide";
+import { useSelector } from "react-redux";
+
+import { STATE_TRAIN } from "../../store/gameState-slice";
+
+import "./Card.scss";
 
 function Card({ cardObject, gameCardClickHandler, flipCardFetcher }) {
   const [isFlip, setIsFlip] = useState(false);
+  const gameState = useSelector((state) => state.gameState.gameState);
 
-  const playSoundHandler = () => {
+  const playSoundHandler = (e) => {
+    e.stopPropagation();
     const soundObject = new Audio(`/src/assets/${cardObject.audioSrc}`);
     soundObject.play();
   };
 
-  const flipCardHandler = () => {
-    console.log("Переворачиваю карту");
+  const flipCardHandler = (e) => {
+    e.stopPropagation();
     setIsFlip((prev) => !prev);
-
     flipCardFetcher(cardObject);
   };
 
   return (
     <div
       className="card"
-      onClick={() => {
-        gameCardClickHandler(cardObject);
+      onClick={(e) => {
+        if (gameState === STATE_TRAIN) playSoundHandler(e);
+        else gameCardClickHandler(cardObject);
       }}
     >
       <CardSide
