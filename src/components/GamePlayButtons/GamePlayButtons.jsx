@@ -2,6 +2,12 @@ import React from "react";
 import { useSelector } from "react-redux";
 
 import { STATE_TRAIN } from "../../store/gameState-slice";
+import { STATE_USER_INPUT } from "../../store/gameState-slice";
+
+import { FaClockRotateLeft } from "react-icons/fa6";
+import { FaPlay } from "react-icons/fa6";
+
+import "./GamePlayButtons.scss";
 
 function GamePlayButtons({ startHandler, repeatHandler }) {
   const gameState = useSelector((state) => state.gameState.gameState);
@@ -10,12 +16,18 @@ function GamePlayButtons({ startHandler, repeatHandler }) {
     <>
       {gameState !== STATE_TRAIN && (
         <div className="game_play_buttons">
-          <button type="button" onClick={startHandler}>
-            start
-          </button>
-          <button type="button" onClick={repeatHandler}>
-            repeat
-          </button>
+          {gameState !== STATE_USER_INPUT ? (
+            <button type="button" className="game_button">
+              <FaPlay onClick={startHandler} title="Начать игру" />
+            </button>
+          ) : (
+            <button type="button" className="game_button">
+              <FaClockRotateLeft
+                onClick={repeatHandler}
+                title="Повторить слово"
+              />
+            </button>
+          )}
         </div>
       )}
     </>

@@ -172,7 +172,7 @@ const initialSlovaState = {
         {
           word: "work",
           translation: "работать",
-          image: "img/00060-3188653949npm run .png",
+          image: "img/00060-3188653949.png",
           audioSrc: "audio/ukwordp005.mp3",
         },
         {

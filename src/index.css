@@ -63,10 +63,14 @@ button {
   font-family: inherit;
   cursor: pointer;
   transition: border-color 0.25s;
+  box-shadow: 0 0 3px 1px hsla(0, 0%, 0%, 0.3);
+  transition: 0.3s;
 }
 
 button:hover {
-  box-shadow: 0 0 2px 0px rgba(0, 0, 0, 0.5);
+  transform: translateY(1px);
+  box-shadow: 0 0 1px 1px hsla(0, 0%, 0%, 0.1);
+  transition: 0.3s;
 }
 
 button:focus,
