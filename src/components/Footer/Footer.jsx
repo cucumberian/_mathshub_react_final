@@ -6,7 +6,10 @@ function Footer({ children }) {
   return (
     <>
       <p>minini (x) 2023</p>
-      <a href="https://github.com/cucumberian/" target="_blank">
+      <a
+        href="https://github.com/cucumberian/_mathshub_react_final"
+        target="_blank"
+      >
         github
       </a>
     </>
