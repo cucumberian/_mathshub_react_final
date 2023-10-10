@@ -7,14 +7,13 @@ import { getDatabase } from "firebase/database";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyAL-70kjrWaWUYw1AI_jYdWVEf-IjH3CYE",
-  authDomain: "easy-english-auth.firebaseapp.com",
-  projectId: "easy-english-auth",
-  databaseURL:
-    "https://easy-english-auth-default-rtdb.europe-west1.firebasedatabase.app",
-  storageBucket: "easy-english-auth.appspot.com",
-  messagingSenderId: "508148516932",
-  appId: "1:508148516932:web:deac9dfc205bcafbc99411",
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  databaseURL: import.meta.env.VITE_FIREBASE_DATABASE_URL,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID,
 };
 
 // Initialize Firebase
